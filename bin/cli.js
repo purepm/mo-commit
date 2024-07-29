@@ -6,15 +6,11 @@ import path from 'path';
 import { exec } from 'child_process';
 import { Anthropic } from '@anthropic-ai/sdk';
 import chalk from 'chalk';
-import { fileURLToPath } from 'url';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import os from 'os';
 
 const prompt = inquirer.createPromptModule();
-
-// Use import.meta.url to get the current module's path
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Parse command line arguments
 const argv = yargs(hideBin(process.argv))
@@ -31,15 +27,19 @@ const argv = yargs(hideBin(process.argv))
     .argv;
 
 const defaultCommitTypes = [
-    { name: 'feat', description: 'A new feature' },
-    { name: 'fix', description: 'A bug fix' },
-    { name: 'docs', description: 'Documentation only changes' },
-    { name: 'style', description: 'Changes that do not affect the meaning of the code' },
-    { name: 'refactor', description: 'A code change that neither fixes a bug nor adds a feature' },
-    { name: 'perf', description: 'A code change that improves performance' },
-    { name: 'test', description: 'Adding missing tests or correcting existing tests' },
-    { name: 'chore', description: 'Changes to the build process or auxiliary tools' },
+    { name: 'feat', description: 'A new feature', checked: true },
+    { name: 'fix', description: 'A bug fix', checked: true },
+    { name: 'docs', description: 'Documentation only changes', checked: false },
+    { name: 'style', description: 'Changes that do not affect the meaning of the code', checked: false },
+    { name: 'refactor', description: 'A code change that neither fixes a bug nor adds a feature', checked: false },
+    { name: 'perf', description: 'A code change that improves performance', checked: false },
+    { name: 'test', description: 'Adding missing tests or correcting existing tests', checked: false },
+    { name: 'chore', description: 'Changes to the build process or auxiliary tools', checked: true },
 ];
+
+function getGlobalConfigPath() {
+    return path.join(os.homedir(), '.mo-commit-config.json');
+}
 
 async function setup() {
     console.log(chalk.blue('Running setup...'));
@@ -64,7 +64,7 @@ async function setup() {
             choices: defaultCommitTypes.map(type => ({
                 name: `${type.name} - ${type.description}`,
                 value: type,
-                checked: true
+                checked: type.checked
             })),
             validate: (answer) => {
                 if (answer.length < 1) {
@@ -92,7 +92,7 @@ async function setup() {
 
     // Save configuration
     const config = JSON.stringify(answers, null, 2);
-    const configPath = path.join(process.cwd(), 'commit-config.json');
+    const configPath = getGlobalConfigPath();
 
     await fs.writeFile(configPath, config);
 
@@ -102,7 +102,7 @@ async function setup() {
 async function defaultCommand() {
     console.log(chalk.blue('Executing commit...'));
 
-    const configPath = path.join(process.cwd(), 'commit-config.json');
+    const configPath = getGlobalConfigPath();
 
     try {
         await fs.access(configPath);
