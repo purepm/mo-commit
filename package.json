@@ -4,6 +4,10 @@
   "description": "A tool to generate commit messages using AI.",
   "main": "bin/cli.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/purepm/mo-commit.git"
+  },
   "scripts": {
     "release": "npm version patch && git push && git push --tags && npm publish"
   },
@@ -13,6 +17,7 @@
   "files": [
     "bin/cli.js"
   ],
+  "homepage": "https://github.com/purepm/mo-commit#readme",
   "keywords": [
     "commit",
     "git",
