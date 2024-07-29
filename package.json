@@ -1,6 +1,6 @@
 {
   "name": "@purepm/commit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool to generate commit messages using AI.",
   "main": "bin/cli.js",
   "type": "module",
