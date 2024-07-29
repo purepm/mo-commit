@@ -1,0 +1,30 @@
+{
+  "name": "@purepm/commit",
+  "version": "1.0.0",
+  "description": "A tool to generate commit messages using AI.",
+  "main": "bin/cli.js",
+  "type": "module",
+  "scripts": {
+    "release": "npm version patch && git push && git push --tags && npm publish"
+  },
+  "bin": {
+    "mo-commit": "./bin/cli.js"
+  },
+  "files": [
+    "bin/cli.js"
+  ],
+  "keywords": [
+    "commit",
+    "git",
+    "ai",
+    "commit message"
+  ],
+  "author": "Pure PM",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.3",
+    "chalk": "^5.3.0",
+    "inquirer": "^10.1.2",
+    "yargs": "^17.7.2"
+  }
+}
