@@ -220,12 +220,11 @@ async function generateCommitMessage(apiToken, filesContent, diff, commitTypes) 
 
                 2. After the type, use the imperative mood (e.g., 'add feature' not 'added feature')
                 3. Keep the first line (subject) under 50 characters, including the type
-                4. Capitalize the subject line after the commit type
+                4. The whole commit message and title must be on lower case always
                 5. Do not end the subject line with a period
                 6. Separate subject from body with a blank line
                 7. Wrap the body at 72 characters
                 8. Use the body to explain what and why, not how
-                9. The whole commit message and title must be on lower case always
 
                 If multiple files or significant changes are involved, use a multi-line commit message with a brief subject line followed by a more detailed explanation in the body.
 
